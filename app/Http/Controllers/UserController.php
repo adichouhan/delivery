@@ -27,7 +27,6 @@ class UserController extends Controller
                 'longitude'=>'required|numeric',
                 'latitude'=>'required|numeric'
             ]);
-
             if ($validator->fails()) {
                 return response()->json(['status' => 400, 'error' => $validator->errors()->all()]);
             }
@@ -39,6 +38,7 @@ class UserController extends Controller
             $objShippingData->ETA = $request->eta;
             $objShippingData->longitude = $request->longitude;
             $objShippingData->latitude = $request->latitude;
+            $objShippingData->status = 0;
             $objShippingData->save();
             return response()->json(['status' => 200, 'message' => 'success']);
 

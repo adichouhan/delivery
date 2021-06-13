@@ -15,6 +15,7 @@
         </li>
 
         <li class="nav-item"><router-link class="nav-link" to="/dashboard"><img class="menu-icon" src="../../assets/images/menu_icons/01.png" alt="menu icon"><span class="menu-title">Dashboard</span></router-link></li>
+        <li class="nav-item"><router-link class="nav-link" to="/delivery"><img class="menu-icon" src="../../assets/images/menu_icons/01.png" alt="menu icon"><span class="menu-title">Delivery</span></router-link></li>
 
         <li class="nav-item"><router-link class="nav-link" to="/orders"><img class="menu-icon" src="../../assets/images/menu_icons/01.png" alt="menu icon"><span class="menu-title">Order</span></router-link></li>
         <li class="nav-item"><router-link class="nav-link" to="/login"><img class="menu-icon" src="../../assets/images/menu_icons/01.png" alt="menu icon"><span class="menu-title">login</span></router-link></li>

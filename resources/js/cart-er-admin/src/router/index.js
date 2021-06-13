@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import dashboard from '../views/dashboard'
 import orderRouter from '../components/orders/router'
 import productRouter from '../components/products/router'
+import deliveryRouter from '../components/deliverys/router'
 import categoryRouter from '../components/categories/router'
 import settingsRouter from '../components/settings/router'
 
@@ -47,6 +48,12 @@ const routes =  [
     component: dashboard,
     meta: { requiresAuth: true }
   },
+        {
+            path: '/dashboard',
+            name: 'dashboard',
+            component: dashboard,
+            meta: { requiresAuth: true }
+        },
   {
     path: '/widgets',
     name: 'widgets',
@@ -167,7 +174,8 @@ const routes =  [
   ...orderRouter,
   ...productRouter,
   ...categoryRouter,
-  ...settingsRouter
+  ...settingsRouter,
+  ...deliveryRouter
 
 ]
 
@@ -176,21 +184,21 @@ const routes =  [
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (localStorage.getItem('is_logged_in') == true || localStorage.getItem('is_logged_in') == 'true') {
-      next()
-    } else {
-      next({
-        name: 'login'
-      })
-    }
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     // this route requires auth, check if logged in
+//     // if not, redirect to login page.
+//     if (localStorage.getItem('is_logged_in') == true || localStorage.getItem('is_logged_in') == 'true') {
+//       next()
+//     } else {
+//       next({
+//         name: 'login'
+//       })
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 export default router;
 

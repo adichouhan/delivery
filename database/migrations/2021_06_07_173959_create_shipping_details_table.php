@@ -22,6 +22,7 @@ class CreateShippingDetailsTable extends Migration
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
             $table->time('ETA')->nullable();
+            $table->time('status')->nullable();
             $table->timestamps();
         });
     }

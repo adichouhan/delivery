@@ -30,7 +30,16 @@ export default {
         })
 
     },
-
+    getDeliveryList({commit}) {
+        axios.get('/api/admin/delivery')
+            .then(response => {
+            if(response.status == 200){
+            commit('setDeliveryList', response.data)
+        }
+    }).catch(error => {
+            console.log(error)
+        })
+    },
 
     //To authenticate user Details
     getAuthenticateUserLogin(context, payload) {

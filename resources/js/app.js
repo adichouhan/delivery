@@ -8,7 +8,7 @@ import Vue from 'vue'
 import router from './cart-er-admin/src/router/index'
 import BootstrapVue from 'bootstrap-vue'
 
-import { store } from './cart-er-admin/src/store/store.js';
+import store from './cart-er-admin/src/store/store'
 require('./bootstrap');
 
 window.Vue = require('vue');

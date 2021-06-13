@@ -15,8 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth Endpoints
-Route::post('login', 'Auth\ApiAuthController@login');
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::post('login', 'Auth\ApiAuthController@login');
+//
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+Route::group(['namespace' => '\App\Http\Controllers', 'prefix'=>'admin'], function() {
+    Route::group(['namespace' => '\App\Http\Controllers\Admin', 'prefix'=>'delivery'], function() {
+        Route::get('/', 'DeliveryController@getDeliveryList');
+        Route::post('/add', 'DeliveryController@create');
+    });
 });
