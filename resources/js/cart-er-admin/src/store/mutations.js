@@ -2,7 +2,9 @@ export default {
     setProductList(state, payload){
         state.arrProductList = payload;
     },
-
+    setDeliveryList(state, payload){
+        state.arrShippingDetail = payload;
+    },
     setAuthentication(state, payload){
         state.arrProductList = payload;
     },

@@ -23,3 +23,24 @@ Route::get('/otp', function () {
         ->verifications
         ->create("+918805987378", "sms");
 });
+
+Route::get('/', function () {
+   return "Hello";
+});
+Route::get('/admin', function () {
+    return view('admin.admin');
+});
+Route::get('/delivery', function () {
+    return view('admin.admin');
+});
+Route::get('/token', function () {
+    return csrf_token();
+});
+
+Route::group([ 'namespace' => '\App\Http\Controllers' ], function() {
+    Route::post('/shipping', 'UserController@postInsertShippingData');
+
+});
+//Route::get('/shipping', function () {
+//
+//});

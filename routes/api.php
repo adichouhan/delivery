@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth Endpoints
+
 Route::post('login', 'Auth\ApiAuthController@login');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -22,14 +23,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
-
-    // ...
-
     // public routes
     Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
     Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
     Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
-    // ...
-
 });
+
+//Route::post('login', 'Auth\ApiAuthController@login');
+//
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+Route::group(['namespace' => '\App\Http\Controllers', 'prefix'=>'admin'], function() {
+    Route::group(['namespace' => '\App\Http\Controllers\Admin', 'prefix'=>'delivery'], function() {
+        Route::get('/', 'DeliveryController@getDeliveryList');
+        Route::post('/add', 'DeliveryController@create');
+    });
+});
+
