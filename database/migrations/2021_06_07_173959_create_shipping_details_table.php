@@ -15,8 +15,10 @@ class CreateShippingDetailsTable extends Migration
     {
         Schema::create('shipping_details', function (Blueprint $table) {
             $table->id();
+            $table->integer('sender_id')->nullable();
+            $table->integer('receiver_id')->nullable();
             $table->string('receiver_name')->nullable();
-            $table->string('mobile_number')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('location')->nullable();
             $table->string('note')->nullable();
             $table->string('longitude')->nullable();
