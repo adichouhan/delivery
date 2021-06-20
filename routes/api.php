@@ -30,9 +30,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         return $request->user();
     });
 
+    Route::post('/postshipping', 'UserController@postshipping')->name('postshipping.api');
     Route::group(['middleware' => ['auth:api']], function (){
         Route::post('/logout', 'ApiAuthController@logout')->name('logout.api');
-        Route::post('/postshipping', 'UserController@postshipping')->name('postshipping.api');
     });
 
 });
