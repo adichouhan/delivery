@@ -9,6 +9,7 @@ Vue.use(Vuex);
 const state = {
     arrProductList : '',
     arrShippingDetail : '',
+    arrProfile : '',
     userProfileDetails    :'' ,
     userSessionKey        :'',
     first_name            :'',
