@@ -8,7 +8,9 @@ export default {
     setAuthentication(state, payload){
         state.arrProductList = payload;
     },
-
+    setProfileList(state, payload){
+        state.arrProfile = payload;
+    },
     // To set My Profile
     setUserProfile(state, payload) {
         console.log('payload');

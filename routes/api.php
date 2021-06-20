@@ -46,5 +46,9 @@ Route::group(['namespace' => '\App\Http\Controllers', 'prefix'=>'admin'], functi
         Route::get('/', 'DeliveryController@getDeliveryList');
         Route::post('/add', 'DeliveryController@create');
     });
+    Route::group(['namespace' => '\App\Http\Controllers\Admin', 'prefix'=>'profile'], function() {
+        Route::get('/', 'ProfileController@getProfileList');
+        Route::post('/add', 'ProfileController@postProfilecreate');
+    });
 });
 

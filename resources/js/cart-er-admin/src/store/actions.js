@@ -21,6 +21,16 @@ export default {
 
     },
 
+    addNewProfile({commit}, payload) {
+        axios.post('/api/admin/profile/add', payload)
+            .then(response => {
+
+        }).catch(error => {
+            console.log(error)
+        })
+
+    },
+
     addNewProduct({commit}, payload) {
         axios.post('/api/admin/products/add', payload)
             .then(response => {
@@ -30,6 +40,17 @@ export default {
         })
 
     },
+    getProfileList({commit}) {
+        axios.get('/api/admin/profile')
+            .then(response => {
+            if(response.status == 200){
+            commit('setProfileList', response.data)
+        }
+    }).catch(error => {
+            console.log(error)
+        })
+    },
+
     getDeliveryList({commit}) {
         axios.get('/api/admin/delivery')
             .then(response => {
