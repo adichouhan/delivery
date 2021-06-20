@@ -6,6 +6,7 @@ import dashboard from '../views/dashboard'
 import orderRouter from '../components/orders/router'
 import productRouter from '../components/products/router'
 import deliveryRouter from '../components/deliverys/router'
+import  profileRouter from '../components/profiles/router'
 import categoryRouter from '../components/categories/router'
 import settingsRouter from '../components/settings/router'
 
@@ -175,7 +176,8 @@ const routes =  [
   ...productRouter,
   ...categoryRouter,
   ...settingsRouter,
-  ...deliveryRouter
+  ...deliveryRouter,
+  ...profileRouter
 
 ]
 
