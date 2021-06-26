@@ -15,6 +15,10 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->string('card_no');
+            $table->string('expiry_month');
+            $table->string('expiry_year');
             $table->timestamps();
         });
     }

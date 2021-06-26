@@ -42,13 +42,13 @@ class ApiAuthController extends Controller
 
             if($user){
                 /* Get credentials from .env */
-//                $token = getenv("TWILIO_AUTH_TOKEN");
-//                $twilio_sid = getenv("TWILIO_SID");
-//                $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
-//                $twilio = new Client($twilio_sid, $token);
-//                $twilio->verify->v2->services($twilio_verify_sid)
-//                    ->verifications
-//                    ->create($data['phone_number'], "sms");
+                $token = getenv("TWILIO_AUTH_TOKEN");
+                $twilio_sid = getenv("TWILIO_SID");
+                $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
+                $twilio = new Client($twilio_sid, $token);
+                $twilio->verify->v2->services($twilio_verify_sid)
+                    ->verifications
+                    ->create($data['phone_number'], "sms");
                 $response = ['user' => $user, 'message' => 'You have been successfully logged in!'];
                 return response($response, 200);
             }
@@ -61,11 +61,16 @@ class ApiAuthController extends Controller
     }
 
     public function signIn(Request  $request){
-        $intMobnumber = $request->number;
         $user = User::where('phone_number', $request->phone_number)->first();
         if ($user) {
-            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-            $response = ['token' => $token, 'user'=> $user];
+            $token = getenv("TWILIO_AUTH_TOKEN");
+            $twilio_sid = getenv("TWILIO_SID");
+            $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
+            $twilio = new Client($twilio_sid, $token);
+            $twilio->verify->v2->services($twilio_verify_sid)
+                ->verifications
+                ->create($request->phone_number, "sms");
+            $response = ['user'=> $user, ];
             return response($response, 200);
         }
 

@@ -30,9 +30,15 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         return $request->user();
     });
 
-    Route::post('/postshipping', 'UserController@postshipping')->name('postshipping.api');
     Route::group(['middleware' => ['auth:api']], function (){
         Route::post('/logout', 'ApiAuthController@logout')->name('logout.api');
+        Route::post('/postshipping', 'UserController@postshipping')->name('postshipping.api');
+        Route::get('/searchByTracking', 'UserController@searchByTracking')->name('searchByTracking.api');
+        Route::get('/shippinglist', 'UserController@getshippinglist')->name('shippinglist.api');
+        Route::get('/getPaymentList', 'UserController@getPaymentList')->name('paymentList.api');
+        Route::post('/updateShippingStatus', 'UserController@updateShippingStatus')->name('updateShippingStatus.api');
+        Route::post('/saveCards', 'UserController@savePayments')->name('savePayments.api');
+        Route::post('/saveCheckout', 'CheckoutController@saveCheckout')->name('savePayments.api');
     });
 
 });

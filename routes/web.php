@@ -33,13 +33,16 @@ Route::get('/admin', function () {
 Route::get('/delivery', function () {
     return view('admin.admin');
 });
+
+Route::get('/profiles', function () {
+    return view('admin.admin');
+});
 Route::get('/token', function () {
     return csrf_token();
 });
 
 Route::group([ 'namespace' => '\App\Http\Controllers' ], function() {
     Route::post('/shipping', 'UserController@postInsertShippingData');
-
 });
 //Route::get('/shipping', function () {
 //

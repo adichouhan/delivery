@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 
+use App\Payment;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -36,6 +37,7 @@ class UserController extends Controller
 //            }
 
             $sender = Auth::user();
+            $sender = User::where('id', $sender->id)->first();
             $receiver = User::where('phone_number', $request->receivernumber)->first();
 
             if(!$receiver){
@@ -52,19 +54,91 @@ class UserController extends Controller
             $objShippingData->location = $request->receiverlocation;
             $objShippingData->note = $request->note;
             $objShippingData->ETA = $request->eta;
+            $objShippingData->tracking_id = 'track-'.time();
             $objShippingData->longitude = $request->longitude;
             $objShippingData->latitude = $request->latitude;
             $objShippingData->status = 0;
             $objShippingData->save();
-            return response()->json(['status' => 200, 'message' => 'success']);
+
+            $response = ['shippingData' => $objShippingData, 'message' => 'You have been successfully created shipping!'];
+            return response($response, 200);
 
         } catch (\Exception $objException) {
-            $arrMixResponse['status'] = 422;
-            $arrMixResponse['error'] = $objException->getMessage();
-            return response()->json($arrMixResponse);
+            $response = ['message' => $objException->getMessage()];
+            return response($response, 422);
         }
 
+    }
 
+    public  function getshippinglist(){
+
+        try {
+        $user = Auth::user();
+        $user = User::where('id', $user->id)->first();
+            $objShippingData = ShippingDetail::where('sender_id', $user->id)->get();
+            $response = ['shippingData' => $objShippingData, 'message' => 'You have been successfully created shipping!'];
+            return response($response, 200);
+
+        } catch (\Exception $objException) {
+            $response = ['message' => $objException->getMessage()];
+            return response($response, 422);
+        }
+    }
+
+    public  function savePayments(Request $request){
+
+        try {
+        $user = Auth::user();
+            $user = User::where('id', $user->id)->first();
+            $objPayment = new Payment();
+            $objPayment->user_id = $user->id;
+            $objPayment->card_no = $request->card_no;
+            $objPayment->expiry_month =  $request->expiry_month;
+            $objPayment->expiry_year = $request->expiry_year;
+            $objPayment->save();
+
+            $response = ['card_details'=>$objPayment, 'message' => 'You have been successfully created shipping!'];
+            return response($response, 200);
+
+        } catch (\Exception $objException) {
+            $response = ['message' => $objException->getMessage()];
+            return response($response, 422);
+        }
+    }
+
+    public  function searchByTracking(Request  $request){
+        try {
+        $user = Auth::user();
+            $user = User::where('id', $user->id)->first();
+            if($user){
+            $objShippingData = ShippingDetail::where('tracking_id', $request->tracking_id)->where('receiver_id', $user->id)->first();
+            $objShippingData = ShippingDetail::where('tracking_id', 'track-1624161999')->where('receiver_id', 41)->first();
+            $response = ['shippingData' => $objShippingData, 'message' => 'You have been successfully created shipping!'];
+            return response($response, 200);
+            }else{
+                $response = ['message' => "Wrong data entered"];
+                return response($response, 422);
+            }
+
+        } catch (\Exception $objException) {
+            $response = ['message' => $objException->getMessage()];
+            return response($response, 422);
+        }
+    }
+
+    public  function updateShippingStatus(Request  $request){
+        try {
+        $user = Auth::user();
+            $user = ShippingDetail::where('phone_number', $request->phone_number)->where('tracking_id',$request->tracking_code)->first();
+            $user->status=1;
+            $user->save();
+            $response = ['message' => 'You have been successfully created shipping!'];
+            return response($response, 200);
+
+        } catch (\Exception $objException) {
+            $response = ['message' => $objException->getMessage()];
+            return response($response, 422);
+        }
     }
 
 }

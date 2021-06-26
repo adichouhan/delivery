@@ -32,6 +32,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = array('card');
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -73,4 +75,11 @@ class User extends Authenticatable
         return $this->phone;
     }
 
+
+
+    public function getCardAttribute()
+    {
+        $cardDetails = Payment::where('user_id', $this->id)->first();
+        return $cardDetails;
+    }
 }
