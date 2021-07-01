@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Payment;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
@@ -39,13 +40,11 @@ class UserController extends Controller
             $sender = Auth::user();
             $sender = User::where('id', $sender->id)->first();
             $receiver = User::where('phone_number', $request->receivernumber)->first();
-
-            if(!$receiver){
-                $receiver = new User();
-                $receiver->phone_number = $request->receivernumber;
-                $receiver->username = $request->receiver_name;
-                $receiver->save();
+            if($sender){
+                $sender->tracking_codes = $sender->tracking_codes - 1;
+                $sender->save();
             }
+
             $objShippingData = new ShippingDetail();
             $objShippingData->sender_id = $sender->id;
             $objShippingData->receiver_id = $receiver->id;
@@ -60,6 +59,46 @@ class UserController extends Controller
             $objShippingData->status = 0;
             $objShippingData->save();
 
+            if($receiver->is_notification)
+            {
+                $url = 'https://fcm.googleapis.com/fcm/send';
+                $fields = array(
+                    'registration_ids' => array(
+                    $receiver->notification_token
+                    ),
+                "notification" => [
+                    "title" => 'test',
+                    "body" => 'fads',
+                ],
+                "data" => [
+                    "click_action" => "FLUTTER_NOTIFICATION_CLICK",
+                    "sound" => "default",
+                    "status" => "done",
+                    "screen" => "/recevertrackingpage",
+                    "xtra" => "time-9898676767789"
+                    ]
+                );
+            $api_key = "AAAAqmS60Oc:APA91bGI8eMsl4u4DDu6VY_BCk57RA70QY8pLkjC6QbwgNb8cExT4yaKusmEZ7RUO9xABxOnG5ZRmmat6dZqwUr58KolaYKfqcp3b5pLWWZ_RTzHFXB2pZeQ4ca4pu3ClzXNBDrLgZ1o";
+            $headers = array(
+                'Content-Type:application/json',
+                'Authorization:key=' . $api_key
+                );
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+                $result = curl_exec($ch);
+                if ($result === FALSE) {
+                    die('FCM Send Error: ' . curl_error($ch));
+                }
+            curl_close($ch);
+//                        return $result;
+}
+
             $response = ['shippingData' => $objShippingData, 'message' => 'You have been successfully created shipping!'];
             return response($response, 200);
 
@@ -68,6 +107,44 @@ class UserController extends Controller
             return response($response, 422);
         }
 
+    }
+
+    public function getUsers(Request  $request){
+        try {
+            $user = Auth::user();
+            $users = User::where('id', '!=', $user->id)->Where('phone_number', 'like', '%' . $request->phone_number . '%')->get();
+            $response = ['users' => $users];
+            return response($response, 200);
+
+        } catch (\Exception $objException) {
+            $response = ['message' => $objException->getMessage()];
+            return response($response, 422);
+        }
+    }
+
+    public function deleteUser(){
+        try {
+            $user = Auth::user();
+           $user->delete();
+            $response = ['message' => 'Account Deleted Successfully' ];
+            return response($response, 200);
+
+        } catch (\Exception $objException) {
+            $response = ['message' => $objException->getMessage()];
+            return response($response, 422);
+        }
+    }
+
+
+    public function getUser(Request  $request){
+        try {
+            $user = Auth::user();
+            $response = ['users' => $user];
+            return response($response, 200);
+        } catch (\Exception $objException) {
+            $response = ['message' => $objException->getMessage()];
+            return response($response, 422);
+        }
     }
 
     public  function getshippinglist(){
@@ -88,16 +165,18 @@ class UserController extends Controller
     public  function savePayments(Request $request){
 
         try {
-        $user = Auth::user();
-            $user = User::where('id', $user->id)->first();
-            $objPayment = new Payment();
+            $user = Auth::user();
+            $objPayment = Payment::where('user_id', $user->id)->first();
+            if(!$objPayment){
+                $objPayment = new Payment();
+            }
             $objPayment->user_id = $user->id;
             $objPayment->card_no = $request->card_no;
             $objPayment->expiry_month =  $request->expiry_month;
             $objPayment->expiry_year = $request->expiry_year;
             $objPayment->save();
 
-            $response = ['card_details'=>$objPayment, 'message' => 'You have been successfully created shipping!'];
+            $response = ['card_details'=>$objPayment, 'message' => 'You account has been credited successfully!'];
             return response($response, 200);
 
         } catch (\Exception $objException) {

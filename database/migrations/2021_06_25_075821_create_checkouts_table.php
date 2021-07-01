@@ -15,7 +15,8 @@ class CreateCheckoutsTable extends Migration
     {
         Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
-            $table->string('_cvc')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->string('_cvc')->unique()->nullable();
             $table->string('expiryMonth')->nullable();
             $table->string('_type')->nullable();
             $table->string('_last4Digits')->nullable();

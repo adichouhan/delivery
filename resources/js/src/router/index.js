@@ -35,9 +35,9 @@ import register from '../views/sample-pages/register'
 
 Vue.use(Router)
 
-export default new Router({
-  linkActiveClass: 'active',
-  routes: [{
+
+let routes;
+routes= [{
     path: '/',
     name: 'dashboard',
     component: dashboard
@@ -146,5 +146,27 @@ export default new Router({
     path: '/forms',
     name: 'forms',
     component: forms
-  }]
+  }];
+
+const router = new Router({
+    mode: 'history',
+    routes
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (localStorage.getItem('is_logged_in') == true || localStorage.getItem('is_logged_in') == 'true') {
+            next()
+        } else {
+            next({
+                name: 'login'
+            })
+        }
+    } else {
+        next()
+    }
+})
+
+export default router;

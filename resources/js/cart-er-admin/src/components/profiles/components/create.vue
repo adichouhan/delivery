@@ -18,19 +18,35 @@
                                           placeholder="Password"></b-form-input>
                         </b-form-group>
                         <b-form-group label="Phone" label-for="input5">
-                            <b-form-input type="text" v-model="objProfile.phone_number" id="phone_number"
+                            <b-form-input type="number" v-model="objProfile.phone_number" id="phone_number"
                                           placeholder="Phone Number"></b-form-input>
                         </b-form-group>
-                        <b-form-group label="Location" label-for="input10">
-                            <textarea id="location" v-model="objProfile.location" class="form-control"
-                                      rows="6"></textarea>
+<!--                        <b-form-group label="Location" label-for="input10">-->
+<!--                            <textarea id="location" v-model="objProfile.location" class="form-control"-->
+<!--                                      rows="6"></textarea>-->
+<!--                        </b-form-group>-->
+                        <b-form-group label="Location" label-for="input5">
+                            <b-form-input type="text" v-model="objProfile.location" disabled id="Location"
+                                          placeholder="Location"></b-form-input>
                         </b-form-group>
                         <b-form-group label="Card" label-for="input5">
                             <b-form-input type="text" v-model="objProfile.card_number" id="card_number"
                                           placeholder="Card Number"></b-form-input>
                         </b-form-group>
+                        <b-form-group label="Tracking Codes" label-for="input5">
+                            <b-form-input type="number" v-model="objProfile.tracking_codes" id="card_number"
+                                          placeholder="Tracking codes"></b-form-input>
+                        </b-form-group>
+
+                            <b-form-group horizontal label="Notifications">
+                                <b-form-radio-group id="on" v-model="objProfile.is_notification" name="radioSubComponent">
+                                    <b-form-radio value="1">On</b-form-radio>
+                                    <b-form-radio value="0">Off</b-form-radio>
+                                </b-form-radio-group>
+                            </b-form-group>
+
                         <b-form-group label="Upload file" label-for="files">
-                            <b-form-file v-model="objProfile.image" id="files" :state="Boolean(objProfile.image)" v-on:change="onImageChange" placeholder="Choose a file..."></b-form-file>
+                            <b-form-file v-model="objProfile.image" id="files" :state="(objProfile.image)" v-on:change="onImageChange" placeholder="Choose a file..."></b-form-file>
                         </b-form-group>
                         <b-button type="submit" variant="success" class="mr-2" @click="addProfile()">Submit</b-button>
                         <b-button variant="light">Cancel</b-button>
@@ -44,9 +60,10 @@
 <script>
     // eslint-disable
     import {mapState} from 'vuex'
+    import axios from "axios";
 
     export default {
-        name: 'AddUser',
+        name: 'EditUser',
         data() {
             return {
                 objProfile: {
@@ -57,16 +74,59 @@
                     card_number: '',
                     password: '',
                     email: '',
+                    is_notification:'',
+                    tracking_codes:'',
                 },
                 errors: [],
             };
         },
-
+        created() {
+            this.getProfile();
+        },
         computed: {},
         components: {},
         methods: {
             addProfile() {
-                this.$store.dispatch('addNewProfile', this.objProfile)
+                let id= this.$route.params.id
+                console.log('asdfasd');
+                console.log(id);
+
+                let url= '/api/admin/profile/'+id
+                axios.post(url,{
+                    username: this.objProfile.name,
+                    email: this.objProfile.email,
+                    password: this.objProfile.password,
+                    phone_number: this.objProfile.phone_number,
+                    is_notification: this.objProfile.is_notification,
+                    tracking_codes: this.objProfile.tracking_codes,
+                })
+                    .then(response => {
+                        if(response.status == 200){
+                            this.$router.push('/profiles')
+                        }
+                    }).catch(error => {
+                    console.log(error)
+                })
+            },
+            getProfile(){
+                let id= this.$route.params.id
+                let url= '/api/admin/profile/'+id
+                axios.get(url)
+                    .then(response => {
+                        if(response.status == 200){
+                            console.log(response);
+                            console.log('adsfsdf');
+                            this.objProfile.name=response.data.username;
+                            this.objProfile.email=response.data.email;
+                            this.objProfile.phone_number=response.data.phone_number;
+                            this.objProfile.location=response.data.phone_number;
+                            this.objProfile.is_notification=response.data.is_notification;
+                            this.objProfile.tracking_codes=response.data.tracking_codes;
+                            console.log(this.objProfile)
+                        }
+                    }).catch(error => {
+                    console.log(error)
+                })
             },
             onImageChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
@@ -82,7 +142,6 @@
                 };
                 reader.readAsDataURL(file)
             }
-
         }
     };
 

@@ -24,17 +24,19 @@
                                     <th class="border-bottom-0">Note</th>
                                     <th class="border-bottom-0">Time for Delivery</th>
                                     <th class="border-bottom-0">Status</th>
+                                    <th class="border-bottom-0">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr v-for="objDelivery in arrShippingDetail" >
                                     <td>{{ objDelivery.id }}</td>
                                     <td>{{ objDelivery.receiver_name }}</td>
-                                    <td>{{ objDelivery.mobile_number }}</td>
+                                    <td>{{ objDelivery.phone_number }}</td>
                                     <td>{{ objDelivery.location }}</td>
                                     <td>{{ objDelivery.note }}</td>
                                     <td>{{ objDelivery.ETA }}</td>
-                                    <td>{{ objDelivery.status== 0 ? 'Active':'In progress' }}</td>
+                                    <td>{{ objDelivery.status== 0 ? 'In progress':'Completed' }}</td>
+                                    <td> <b-button variant="primary" class=""><router-link class="nav-link text-white" :to="'/delivery/edit/'+objDelivery.id">Edit</router-link></b-button></td>
 
                                 </tr>
                                 </tbody>

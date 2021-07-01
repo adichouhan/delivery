@@ -26,6 +26,8 @@ class CreateUsersTable extends Migration
             $table->boolean('is_notification')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->string('notification_token')->nullable();
+            $table->boolean('is_admin')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

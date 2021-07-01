@@ -1,52 +1,24 @@
 import axios from 'axios'
 export default {
-    getProductList({commit}) {
-        axios.get('/api/admin/products')
-            .then(response => {
-                if(response.status == 200){
-                    commit('setProductList', response.data)
-                }
-            }).catch(error => {
-            console.log(error)
-        })
-    },
 
-    addCategory({commit}, payload) {
-        axios.post('/api/admin/category/store', payload)
-            .then(response => {
-
-            }).catch(error => {
-            console.log(error)
-        })
-
-    },
-
-    addNewProfile({commit}, payload) {
-        axios.post('/api/admin/profile/add', payload)
-            .then(response => {
-
-        }).catch(error => {
-            console.log(error)
-        })
-
-    },
-
-    addNewProduct({commit}, payload) {
-        axios.post('/api/admin/products/add', payload)
-            .then(response => {
-
-            }).catch(error => {
-            console.log(error)
-        })
-
-    },
     getProfileList({commit}) {
-        axios.get('/api/admin/profile')
+        axios.get('/api/admin/profiles')
             .then(response => {
             if(response.status == 200){
             commit('setProfileList', response.data)
         }
     }).catch(error => {
+            console.log(error)
+        })
+    },
+
+    getProfile({commit}) {
+        axios.get('/api/admin/profile')
+            .then(response => {
+                if(response.status == 200){
+                    commit('setProfileList', response.data)
+                }
+            }).catch(error => {
             console.log(error)
         })
     },
@@ -64,7 +36,7 @@ export default {
 
     //To authenticate user Details
     getAuthenticateUserLogin(context, payload) {
-        payload.form.post('/api/login')
+        payload.form.post('/api/admin/login')
             .then((response) => {
                 if(200 === response.data.status){
                     context.commit('setErrors', {errors:  false});

@@ -9,13 +9,8 @@ const deliveryRouter = [
         meta: { requiresAuth: true }
     },
     {
-        path: '/deliverys/create',
+        path: '/deliverys/edit/:id',
         component: deliveryCreate,
-        meta: { requiresAuth: true }
-    },
-    {
-        path: '/deliverys/create',
-        component: deliveryList,
         meta: { requiresAuth: true }
     },
 ]

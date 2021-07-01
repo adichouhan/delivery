@@ -9,13 +9,8 @@ const profileRouter = [
         meta: { requiresAuth: true }
     },
     {
-        path: '/profile/create',
+        path: '/profile/edit/:id',
         component: profilesCreate,
-        meta: { requiresAuth: true }
-    },
-    {
-        path: '/profile/create',
-        component: profileList,
         meta: { requiresAuth: true }
     },
 ]

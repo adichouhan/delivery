@@ -9,7 +9,7 @@
                                 <h5 class="card-title mb-4">User Profiles</h5>
                             </div>
                             <div class="col-4">
-                                <b-button variant="primary" class="pull-right"><router-link class="nav-link text-white" to="/profile/create">Add Deliverys</router-link></b-button>
+
                             </div>
                         </div>
 
@@ -18,23 +18,21 @@
                                 <thead>
                                 <tr>
                                     <th class="border-bottom-0">Sr.No</th>
-                                    <th class="border-bottom-0">Profile Photo</th>
                                     <th class="border-bottom-0">User Name</th>
                                     <th class="border-bottom-0">Email Id</th>
                                     <th class="border-bottom-0">Phone Number</th>
                                     <th class="border-bottom-0">Location</th>
+                                    <th class="border-bottom-0">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr v-for="objProfile in arrProfile" >
                                     <td>{{ objProfile.id }}</td>
-                                    <td>
-                                        <img class="img-sm rounded-circle mb-2 mb-md-0" :src='"/profile/" + objProfile.avatar' alt="profile image">
-                                    </td>
                                     <td>{{ objProfile.username }}</td>
                                     <td>{{ objProfile.email }}</td>
                                     <td>{{ objProfile.phone_number}}</td>
                                     <td>{{ objProfile.location }}</td>
+                                    <td><b-button variant="primary" class=""><router-link class="nav-link text-white" :to="'/profile/edit/'+objProfile.id">Edit User</router-link></b-button></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -49,7 +47,7 @@
 <script lang="js">
     import { mapState } from 'vuex';
     export default {
-        name: 'delivery',
+        name: 'profiles',
         data () {
             return {
 

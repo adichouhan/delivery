@@ -22,8 +22,13 @@ class DeliveryController extends ApiController
      */
     public function getDeliveryList()
     {
-//        dd("djfdsfsj");
-        $arrShippingDetail = ShippingDetail::all();
+        $arrShippingDetail = ShippingDetail::With('sender')->With('receiver')->get();
+        return response()->json($arrShippingDetail);
+    }
+
+    public function getDelivery($id)
+    {
+        $arrShippingDetail = ShippingDetail::where('id', $id)->first();
         return response()->json($arrShippingDetail);
     }
 
