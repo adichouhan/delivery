@@ -78,11 +78,10 @@ class UserController extends Controller
                     "xtra" => "time-9898676767789"
                     ]
                 );
-            $api_key = "AAAAqmS60Oc:APA91bGI8eMsl4u4DDu6VY_BCk57RA70QY8pLkjC6QbwgNb8cExT4yaKusmEZ7RUO9xABxOnG5ZRmmat6dZqwUr58KolaYKfqcp3b5pLWWZ_RTzHFXB2pZeQ4ca4pu3ClzXNBDrLgZ1o";
-            $headers = array(
-                'Content-Type:application/json',
-                'Authorization:key=' . $api_key
-                );
+//            $headers = array(
+//                'Content-Type:application/json',
+//                'Authorization:key=' . $api_key
+//                );
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_POST, true);
