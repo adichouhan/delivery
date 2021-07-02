@@ -33,6 +33,8 @@ class CheckoutController extends Controller
         $objCheckout->status    =   $request->status;
         $objCheckout->method    =   $request->payment_method;
         $objCheckout->verify    =   $request->verify;
+        $objCheckout->amount    =   $request->amount;
+        $objCheckout->tracking_codes    =   $request->tracking_codes;
         $objCheckout->save();
 
         $user->tracking_codes = $trackingCodes + $request->tracking_codes;

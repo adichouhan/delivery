@@ -82,4 +82,8 @@ class User extends Authenticatable
         $cardDetails = Payment::where('user_id', $this->id)->first();
         return $cardDetails;
     }
+
+    public function checkouts(){
+        return $this->hasMany(Checkout::class, 'user_id', 'id');
+    }
 }

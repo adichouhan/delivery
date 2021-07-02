@@ -10,11 +10,11 @@ class ShippingDetail extends Model
 
 
     public function sender(){
-        return $this->hasOne(User::class, 'sender_id', 'id')->pluck('username', 'phone_number');
+        return $this->hasOne(User::class, 'id', 'sender_id');
     }
 
     public function receiver(){
-        return $this->hasOne(User::class, 'sender_id', 'id')->pluck('username', 'phone_number');
+        return $this->hasOne(User::class, 'id', 'sender_id' );
     }
 
 }

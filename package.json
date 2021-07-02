@@ -9,7 +9,6 @@
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
-
     "dependencies": {
         "bootstrap-vue": "2.21.2",
         "compass-mixins": "0.12.10",
@@ -21,11 +20,10 @@
         "vue-cookies": "^1.7.4",
         "vue-md-date-picker": "1.0.15",
         "vue-router": "~3.3.2",
+        "vuejs-datatable": "^2.0.0-alpha.7",
         "vuex": "^3.6.2"
     },
-
     "devDependencies": {
-
         "autoprefixer": "^7.1.2",
         "axios": "^0.19.2",
         "babel-core": "^7.0.0-beta.0",
@@ -99,8 +97,5 @@
         "vue-loader": "^14.2.4",
         "vue-style-loader": "^3.0.1",
         "vue-template-compiler": "^2.6.12"
-
-
-
     }
 }

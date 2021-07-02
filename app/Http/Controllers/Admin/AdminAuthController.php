@@ -19,7 +19,7 @@ class AdminAuthController extends Controller
             return $this->responseUnauthorized();
         }
 
-        // Get the user data.
+        // Get the user data.f
         $user = auth('web')->user();
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
         return response()->json([
@@ -53,7 +53,8 @@ class AdminAuthController extends Controller
      */
     public function getprofile($id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::where('id', $id)->with('checkouts')->first();
+
         return response()->json($user);
     }
 

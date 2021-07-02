@@ -27,16 +27,32 @@ class ApiAuthController extends Controller
 
             DB::connection()->enableQueryLog();
             $user = User::where('phone_number', request('phone_number'))->whereNull('otp_verified')->first();
-            if(!$user){
-               $user = new User();
-               $user->username =   request('username');
-               $user->phone_number =   request('phone_number');
-               $user->password =   Hash::make(request('password'));
-               $user->location =   request('location');
-               $user->email    =   request('email');
-               $user->avatar   =   request('avatar');
-               $user->avatar_name  =   request('avatar_name');
-               $user->save();
+            if(!$user) {
+                $user = new User();
+                $user->username = request('username');
+                $user->phone_number = request('phone_number');
+                $user->password = Hash::make(request('password'));
+                $user->location = request('location');
+                $user->email = request('email');
+//               $user->avatar   =   request('avatar');
+                $user->avatar_name = request('avatar_name');
+                $user->save();
+
+//                if (request('avatar')) {
+//                    $folderPath = "images/";
+//                    $img = request('avatar');
+//
+//                    $image_parts = explode(";base64,", $img);
+////                    return $image_parts[1];
+//                    $image_type_aux = explode("image/", $image_parts[0]);
+//                    $pos  = strpos($img, ';');
+//                    return $pos;
+//                    $image_type = explode(':', substr($img, 0, $pos))[1];;
+//                    $image_base64 = base64_decode($image_parts[1]);
+//                    $file = $folderPath . uniqid() . '. ' . $image_type;
+//
+//                    file_put_contents($file, $image_base64);
+//                }
             }
             $queries = DB::getQueryLog();
 

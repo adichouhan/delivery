@@ -13,8 +13,8 @@
                             </div>
                         </div>
 
-                        <div class="table-responsive">
-                            <table class="table center-aligned-table">
+                        <div  class="table-responsive">
+                            <table id="profilesList" class="table center-aligned-table">
                                 <thead>
                                 <tr>
                                     <th class="border-bottom-0">Sr.No</th>
@@ -26,7 +26,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="objProfile in arrProfile" >
+                                <tr v-for="objProfile in this.arrobjProfiles" >
                                     <td>{{ objProfile.id }}</td>
                                     <td>{{ objProfile.username }}</td>
                                     <td>{{ objProfile.email }}</td>
@@ -37,6 +37,10 @@
                                 </tbody>
                             </table>
                         </div>
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -50,15 +54,43 @@
         name: 'profiles',
         data () {
             return {
-
+                columns: [
+                    {label: 'Sr no', field: 'id'},
+                    {label: 'User Name', field: 'username'},
+                    {label: 'Email ID', field: 'email'},
+                    {label: 'Phone no.', field: 'phone_number'},
+                    {label: 'Location', field: 'location'}
+                ],
+                rows:null,
+                arrobjProfiles:null
             }
         },
         created() {
             this.getProfileList();
+
         },
         methods:{
+            // getProfileList() {
+            //     this.$store.dispatch('getProfileList');
+            // },
             getProfileList() {
-                this.$store.dispatch('getProfileList');
+                axios.get('/api/admin/profiles')
+                    .then(response => {
+                        this.arrobjProfiles = response.data;
+                        this.rows = response.data;
+                        $(document).ready(function() {
+                            $('#profilesList').DataTable();
+                        } );
+                        if(response.status == 200){
+                            this.arrobjProfiles.each((item) => {
+                                console.log(item);
+                                this.rows.push(item)
+                            });
+
+                        }
+                    }).catch(error => {
+                    console.log(error)
+                })
             },
         },
         computed: {

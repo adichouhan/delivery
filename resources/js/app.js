@@ -13,6 +13,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 Vue.use(BootstrapVue);
+import { VuejsDatatableFactory } from 'vuejs-datatable';
+
+Vue.use( VuejsDatatableFactory );
 
 Vue.config.productionTip = false;
 

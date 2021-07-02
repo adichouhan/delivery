@@ -181,9 +181,13 @@ router.beforeEach((to, from, next) => {
     if (localStorage.getItem('is_logged_in') == true || localStorage.getItem('is_logged_in') == 'true') {
       next()
     } else {
-      next({
-        name: 'login'
-      })
+      if(localStorage.getItem('is_logged_in') == true ||  localStorage.getItem('is_logged_in') == 'true')
+      {
+        next({name: 'profiles'})
+      } else {
+        next({name: 'login' })
+      }
+
     }
   } else {
     next()

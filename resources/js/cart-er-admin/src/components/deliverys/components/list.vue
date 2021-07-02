@@ -9,12 +9,12 @@
                                 <h5 class="card-title mb-4">Delivery</h5>
                             </div>
                             <div class="col-4">
-                                <b-button variant="primary" class="pull-right"><router-link class="nav-link text-white" to="/deliverys/add">Add Deliverys</router-link></b-button>
+                                <!--<b-button variant="primary" class="pull-right"><router-link class="nav-link text-white" to="/deliverys/add">Add Deliverys</router-link></b-button>-->
                             </div>
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table center-aligned-table">
+                            <table id="deliveryList" class="table center-aligned-table">
                                 <thead>
                                 <tr>
                                     <th class="border-bottom-0">Sr. No</th>
@@ -63,7 +63,11 @@
         },
         methods:{
             getDeliveryList() {
-                this.$store.dispatch('getDeliveryList');
+                this.$store.dispatch('getDeliveryList').then(()=>{
+                    $(document).ready(function() {
+                        $('#deliveryList').DataTable();
+                    } );
+                });
             }
         },
         computed: {

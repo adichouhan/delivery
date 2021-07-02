@@ -24,12 +24,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/register','ApiAuthController@register')->name('register.api');
 //    Route::post('/makepayment','PaymentController@makePayment')->name('payment.api');
     Route::get('/new-access-code','PaymentController@makePayment')->name('payment.api');
-    Route::get('/check',function(){
-        $token = env("TWILIO_AUTH_TOKEN");
-        $twilio_sid = env("TWILIO_SID");
-        $twilio_verify_sid = env("TWILIO_VERIFY_SID");
-        dd($token, $twilio_sid, $twilio_verify_sid );
-    })->name('payment.api');
     Route::get('/verify/{reference?}','PaymentController@verify')->name('paymentverify.api');
 
     Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -58,9 +52,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
 });
 
-Route::get('/get', function (){
-    return 'daf';
-});
 
 Route::group(['namespace' => '\App\Http\Controllers', 'prefix'=>'admin'], function() {
     Route::group(['namespace' => '\App\Http\Controllers\Admin', 'prefix'=>'delivery'], function() {

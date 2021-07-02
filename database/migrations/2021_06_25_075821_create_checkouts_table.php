@@ -25,6 +25,8 @@ class CreateCheckoutsTable extends Migration
             $table->string('status')->nullable();
             $table->string('method')->nullable();
             $table->string('verify')->nullable();
+            $table->double('amount')->nullable();
+            $table->double('tracking_codes')->nullable();
             $table->timestamps();
         });
     }

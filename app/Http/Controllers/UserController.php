@@ -112,7 +112,8 @@ class UserController extends Controller
     public function getUsers(Request  $request){
         try {
             $user = Auth::user();
-            $users = User::where('id', '!=', $user->id)->Where('phone_number', 'like', '%' . $request->phone_number . '%')->get();
+//            $users = User::where('id', '!=', $user->id)->Where('phone_number', 'like', '%' . $request->phone_number . '%')->get();
+            $users = User::Where('phone_number', 'like', '%' . $request->phone_number . '%')->get();
             $response = ['users' => $users];
             return response($response, 200);
 

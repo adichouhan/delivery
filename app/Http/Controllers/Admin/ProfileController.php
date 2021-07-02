@@ -26,7 +26,7 @@ class ProfileController extends ApiController
     public function getProfileList()
     {
         $arrProfile = Profile::all();
-        return response()->json($arrProfile);
+        return response()->json(['objProfile' => $arrProfile, ]);
     }
 
     public function postProfilecreate(Request $request)

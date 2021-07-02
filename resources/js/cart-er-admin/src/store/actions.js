@@ -43,7 +43,7 @@ export default {
                     context.commit('setUserProfile', {responseData: response.data});
                     context.commit('setLoginStatus', {boolLoggedIn: true})
                     context.commit('showLoading', {boolShowLoading: false});
-                    payload.router.push('/dashboard')
+                    payload.router.push('/profiles')
                 }
                 else {
                     context.commit('setErrors', {errors:  [response.data.error.message]});
